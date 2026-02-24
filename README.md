@@ -12,12 +12,34 @@ Reproductor de video avanzado tipo YouTube con las siguientes características:
 - **🔄 Secciones Secuenciales**: Cada sección ocupa su propio espacio en la línea de tiempo, sin overlaps
 - **✂️ Sistema de Cortes**: Salta automáticamente las secciones no deseadas (cuts)
 - **🏷️ Etiquetas/Tags**: Visualiza y navega por diferentes secciones temáticas que cubren todo el video
-- **⌨️ Atajos de Teclado**: Control completo mediante teclado
-  - `Espacio`: Reproducir/Pausar
-  - `Flecha Derecha`: Siguiente punto de interés
-  - `Flecha Izquierda`: Punto de interés anterior
+- **🎮 Controles Completos**: Botones visuales + atajos de teclado para todas las operaciones
 - **⏱️ Tiempo Virtual**: Sistema de tiempo que excluye los cortes para una experiencia fluida
 - **✅ Validación de Secciones**: Sistema automático que detecta superposiciones en los tags
+
+### ⌨️ Atajos de Teclado
+
+#### Controles Básicos
+- **Espacio**: Reproducir/Pausar
+
+#### Navegación por Tiempo
+- **Flecha Derecha (→)**: Adelantar 15 segundos
+- **Flecha Izquierda (←)**: Retroceder 15 segundos
+- **L**: Adelantar 10 segundos
+- **J**: Retroceder 10 segundos
+
+#### Navegación por Secciones
+- **Shift + Flecha Derecha**: Siguiente sección
+- **Shift + Flecha Izquierda**: Sección anterior
+- **M** o **.**: Siguiente sección
+- **N** o **,**: Sección anterior
+
+### 🎮 Controles Visuales
+
+El reproductor incluye botones para:
+- ⏮ Ir a sección anterior
+- -15s / +15s para adelantar/retroceder
+- ⏭ Ir a siguiente sección
+- ▶/⏸ Reproducir/Pausar
 
 ### 🏗️ Arquitectura
 
