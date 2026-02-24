@@ -35,13 +35,23 @@ export const VideoPlayer = () => {
   if (!state.url) return <div style={{ textAlign: 'center' }}>Cargando video...</div>;
 
   return (
-    <div style={{ width: '100%', maxWidth: '800px', margin: '0 auto', position: 'relative', backgroundColor: 'black' }}>
+    <div style={{ 
+      width: '100%', 
+      position: 'relative', 
+      backgroundColor: '#000',
+      aspectRatio: '16 / 9'
+    }}>
       <video
         ref={videoRef}
         src={state.url}
         onTimeUpdate={handleTimeUpdate}
         onEnded={() => dispatch({ type: 'TOGGLE_PLAY' })}
-        style={{ width: '100%', display: 'block' }}
+        style={{ 
+          width: '100%', 
+          height: '100%',
+          display: 'block',
+          objectFit: 'contain'
+        }}
       />
     </div>
   );

@@ -24,35 +24,76 @@ export const CustomProgressBar = () => {
   };
 
   return (
-    <div style={{ padding: '15px 20px', backgroundColor: '#2a2a2a' }}>
+    <div style={{ padding: '15px 20px', backgroundColor: '#181818' }}>
+      {/* Marcadores de capítulos arriba de la barra */}
+      <div style={{ 
+        position: 'relative', 
+        width: '100%', 
+        marginBottom: '8px',
+        height: '24px'
+      }}>
+        {state.tags.map((tag) => {
+          const virtualStart = realToVirtualTime(tag.start, state.cuts);
+          const leftPercent = (virtualStart / state.virtualDuration) * 100;
+          
+          return (
+            <div
+              key={`marker-${tag.id}`}
+              style={{
+                position: 'absolute',
+                left: `${leftPercent}%`,
+                transform: 'translateX(-50%)',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                cursor: 'pointer'
+              }}
+              onClick={(e) => {
+                e.stopPropagation();
+                dispatch({ type: 'SEEK_VIRTUAL', payload: virtualStart });
+              }}
+            >
+              <div style={{
+                width: '8px',
+                height: '8px',
+                backgroundColor: tag.color,
+                borderRadius: '50%',
+                border: '2px solid #fff',
+                marginBottom: '2px',
+                boxShadow: '0 2px 4px rgba(0,0,0,0.4)'
+              }} />
+              <div style={{
+                width: '2px',
+                height: '8px',
+                backgroundColor: tag.color,
+                opacity: 0.6
+              }} />
+            </div>
+          );
+        })}
+      </div>
       
+      {/* Barra de progreso principal */}
       <div 
         ref={progressRef}
         onClick={handleProgressBarClick}
         style={{
           width: '100%',
-          height: '12px',
-          backgroundColor: '#555',
-          borderRadius: '6px',
+          height: '6px',
+          backgroundColor: '#3f3f3f',
+          borderRadius: '3px',
           position: 'relative',
           cursor: 'pointer',
-          overflow: 'hidden' 
+          overflow: 'visible'
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.height = '8px';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.height = '6px';
         }}
       >
-        
-        <div 
-          style={{
-            height: '100%',
-            backgroundColor: '#ff0000',
-            width: `${progressPercentage}%`,
-            transition: 'width 0.1s linear', // Suaviza el movimiento
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            zIndex: 1
-          }}
-        />
-
+        {/* Secciones de colores de fondo */}
         {state.tags.map((tag) => {
           const virtualStart = realToVirtualTime(tag.start, state.cuts);
           const virtualEnd = realToVirtualTime(tag.end, state.cuts);
@@ -60,31 +101,67 @@ export const CustomProgressBar = () => {
           const leftPercent = (virtualStart / state.virtualDuration) * 100;
           const widthPercent = ((virtualEnd - virtualStart) / state.virtualDuration) * 100;
 
-          const isActive = state.virtualTime >= virtualStart && state.virtualTime <= virtualEnd;
-
           return (
             <div 
-              key={tag.id}
-              title={tag.label} 
+              key={`section-${tag.id}`}
+              title={tag.label}
               style={{
                 position: 'absolute',
-                top: isActive ? '0' : '2px', 
-                height: isActive ? '12px' : '8px',
+                top: 0,
+                bottom: 0,
                 left: `${leftPercent}%`,
                 width: `${widthPercent}%`,
                 backgroundColor: tag.color,
-                zIndex: 2, 
-                opacity: 0.8,
-                borderLeft: '1px solid black',
-                borderRight: '1px solid black',
-                transition: 'all 0.2s ease'
+                opacity: 0.3,
+                pointerEvents: 'none'
               }}
             />
           );
         })}
+        
+        {/* Barra de progreso roja */}
+        <div 
+          style={{
+            height: '100%',
+            backgroundColor: '#ff0000',
+            width: `${progressPercentage}%`,
+            transition: 'width 0.1s linear',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            zIndex: 1,
+            borderRadius: '3px'
+          }}
+        />
+
+        {/* Indicador circular en la posición actual */}
+        <div 
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: `${progressPercentage}%`,
+            transform: 'translate(-50%, -50%)',
+            width: '14px',
+            height: '14px',
+            backgroundColor: '#ff0000',
+            borderRadius: '50%',
+            border: '2px solid #fff',
+            zIndex: 2,
+            boxShadow: '0 2px 4px rgba(0,0,0,0.4)',
+            opacity: state.isPlaying ? 1 : 0.8
+          }}
+        />
       </div>
 
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '8px', fontSize: '12px', color: '#aaa' }}>
+      {/* Información de tiempo */}
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'space-between', 
+        marginTop: '10px', 
+        fontSize: '12px', 
+        color: '#aaa',
+        fontWeight: '500'
+      }}>
         <span>{formatTime(state.virtualTime)}</span>
         <span>{formatTime(state.virtualDuration)}</span>
       </div>

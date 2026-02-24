@@ -1,16 +1,61 @@
-# React + Vite
+# Reproductor de Video Avanzado
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Descripción
 
-Currently, two official plugins are available:
+Reproductor de video avanzado tipo YouTube con las siguientes características:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### ✨ Características Principales
 
-## React Compiler
+- **🎬 Interfaz tipo YouTube**: Layout profesional con panel de secciones lateral
+- **📑 Panel de Secciones Interactivo**: Navegación rápida a través de capítulos/secciones del video
+- **🎯 Barra de Progreso Inteligente**: Marcadores visuales que muestran las secciones sin superponerse
+- **✂️ Sistema de Cortes**: Salta automáticamente las secciones no deseadas (cuts)
+- **🏷️ Etiquetas/Tags**: Visualiza y navega por diferentes secciones temáticas
+- **⌨️ Atajos de Teclado**: Control completo mediante teclado
+  - `Espacio`: Reproducir/Pausar
+  - `Flecha Derecha`: Siguiente punto de interés
+  - `Flecha Izquierda`: Punto de interés anterior
+- **⏱️ Tiempo Virtual**: Sistema de tiempo que excluye los cortes para una experiencia fluida
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 🏗️ Arquitectura
 
-## Expanding the ESLint configuration
+El proyecto sigue una arquitectura limpia con separación de responsabilidades:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Domain Layer** (`src/domain/`): Lógica de negocio pura para cálculos de tiempo
+- **Context** (`src/context/`): Gestión de estado global con React Context + Reducer
+- **Components** (`src/components/`): Componentes UI reutilizables
+
+### 📦 Componentes
+
+- `VideoPlayer`: Reproductor de video principal
+- `CustomProgressBar`: Barra de progreso con marcadores de secciones
+- `Controls`: Controles de reproducción
+- `ChapterPanel`: Panel lateral con lista de secciones
+- `VideoContext`: Proveedor de contexto global
+
+### 🎨 Diseño
+
+El diseño sigue los principios de YouTube:
+- Tema oscuro (#0f0f0f, #181818)
+- Layout responsivo con columnas flexibles
+- Feedback visual en interacciones
+- Marcadores de color en secciones activas
+
+## Instalación
+
+```bash
+npm install
+```
+
+## Desarrollo
+
+```bash
+npm run dev
+```
+
+## Tecnologías
+
+- React + Vite
+- JavaScript ES6+
+- React Context + Reducer
+- CSS-in-JS (inline styles)

@@ -65,25 +65,56 @@ export const Controls = () => {
   }, [state.realTime, state.cuts, togglePlay, getValidPointsOfInterest, dispatch]);
 
   return (
-    <div style={{ padding: '10px 0', display: 'flex', justifyContent: 'center', backgroundColor: '#2a2a2a' }}>
-      <button 
-        onClick={togglePlay}
-        style={{
-          padding: '10px 20px',
-          fontSize: '16px',
-          cursor: 'pointer',
-          backgroundColor: '#3b82f6',
-          color: 'white',
-          border: 'none',
-          borderRadius: '5px',
-          fontWeight: 'bold'
-        }}
-      >
-        {state.isPlaying ? 'Pausar (Space)' : 'Reproducir (Space)'}
-      </button>
-      <span style={{ marginLeft: '15px', display: 'flex', alignItems: 'center', color: '#ccc', fontSize: '14px' }}>
-        Usa ⬅️ y ➡️ para navegar inteligentemente
-      </span>
+    <div style={{ 
+      padding: '16px 20px', 
+      display: 'flex', 
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      backgroundColor: '#181818',
+      borderTop: '1px solid #333'
+    }}>
+      <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+        <button 
+          onClick={togglePlay}
+          style={{
+            padding: '10px 24px',
+            fontSize: '14px',
+            cursor: 'pointer',
+            backgroundColor: state.isPlaying ? '#ff0000' : '#3b82f6',
+            color: 'white',
+            border: 'none',
+            borderRadius: '20px',
+            fontWeight: '600',
+            transition: 'all 0.2s ease',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.3)'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = 'scale(1.05)';
+            e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.4)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = 'scale(1)';
+            e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.3)';
+          }}
+        >
+          {state.isPlaying ? '⏸ Pausar' : '▶ Reproducir'}
+        </button>
+        
+        <div style={{
+          padding: '8px 16px',
+          backgroundColor: '#272727',
+          borderRadius: '8px',
+          fontSize: '12px',
+          color: '#aaa',
+          border: '1px solid #3f3f3f'
+        }}>
+          <span style={{ marginRight: '8px' }}>⌨️</span>
+          <span style={{ fontWeight: '500' }}>Espacio</span>
+          <span style={{ margin: '0 8px', color: '#555' }}>|</span>
+          <span style={{ fontWeight: '500' }}>⬅️ ➡️</span>
+          <span style={{ marginLeft: '4px' }}>Navegar</span>
+        </div>
+      </div>
     </div>
   );
 };
