@@ -20,8 +20,8 @@ export const ChapterPanel = () => {
 
   const getCurrentChapter = () => {
     return state.tags.find(tag => 
-      state.realTime >= tag.start && state.realTime <= tag.end
-    );
+      state.realTime >= tag.start && state.realTime < tag.end
+    ) || state.tags[state.tags.length - 1]; // Default al último si estamos al final
   };
 
   const currentChapter = getCurrentChapter();

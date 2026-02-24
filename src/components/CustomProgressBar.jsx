@@ -25,16 +25,17 @@ export const CustomProgressBar = () => {
 
   return (
     <div style={{ padding: '15px 20px', backgroundColor: '#181818' }}>
-      {/* Marcadores de capítulos arriba de la barra */}
       <div style={{ 
         position: 'relative', 
         width: '100%', 
         marginBottom: '8px',
         height: '24px'
       }}>
-        {state.tags.map((tag) => {
+        {state.tags.map((tag, index) => {
           const virtualStart = realToVirtualTime(tag.start, state.cuts);
           const leftPercent = (virtualStart / state.virtualDuration) * 100;
+          
+          if (virtualStart === 0) return null;
           
           return (
             <div
@@ -52,6 +53,7 @@ export const CustomProgressBar = () => {
                 e.stopPropagation();
                 dispatch({ type: 'SEEK_VIRTUAL', payload: virtualStart });
               }}
+              title={`Ir a: ${tag.label}`}
             >
               <div style={{
                 width: '8px',
@@ -93,13 +95,15 @@ export const CustomProgressBar = () => {
           e.currentTarget.style.height = '6px';
         }}
       >
-        {/* Secciones de colores de fondo */}
-        {state.tags.map((tag) => {
+        {/* Secciones de colores de fondo - estilo YouTube (NO se superponen) */}
+        {state.tags.map((tag, index) => {
           const virtualStart = realToVirtualTime(tag.start, state.cuts);
           const virtualEnd = realToVirtualTime(tag.end, state.cuts);
           
           const leftPercent = (virtualStart / state.virtualDuration) * 100;
           const widthPercent = ((virtualEnd - virtualStart) / state.virtualDuration) * 100;
+
+          const isActive = state.virtualTime >= virtualStart && state.virtualTime < virtualEnd;
 
           return (
             <div 
@@ -112,8 +116,10 @@ export const CustomProgressBar = () => {
                 left: `${leftPercent}%`,
                 width: `${widthPercent}%`,
                 backgroundColor: tag.color,
-                opacity: 0.3,
-                pointerEvents: 'none'
+                opacity: isActive ? 0.5 : 0.25,
+                pointerEvents: 'none',
+                borderRight: index < state.tags.length - 1 ? '2px solid #000' : 'none',
+                transition: 'opacity 0.2s ease'
               }}
             />
           );

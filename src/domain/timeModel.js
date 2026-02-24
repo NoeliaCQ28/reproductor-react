@@ -37,3 +37,35 @@ export const virtualToRealTime = (virtualTime, cuts = []) => {
 export const isTimeInCut = (realTime, cuts = []) => {
   return cuts.find(cut => realTime >= cut.start && realTime < cut.end);
 };
+
+export const validateSequentialTags = (tags = []) => {
+  if (!tags || tags.length === 0) return { valid: true, errors: [] };
+  
+  const sortedTags = [...tags].sort((a, b) => a.start - b.start);
+  const errors = [];
+  
+  for (let i = 0; i < sortedTags.length - 1; i++) {
+    const current = sortedTags[i];
+    const next = sortedTags[i + 1];
+    
+    if (current.end > next.start) {
+      errors.push({
+        message: `Superposición detectada: "${current.label}" (${current.start}-${current.end}) se superpone con "${next.label}" (${next.start}-${next.end})`,
+        tags: [current, next]
+      });
+    }
+    
+    if (current.end < next.start) {
+      errors.push({
+        message: `Gap detectado: Hay un espacio sin cubrir entre "${current.label}" (termina en ${current.end}) y "${next.label}" (empieza en ${next.start})`,
+        tags: [current, next],
+        type: 'warning'
+      });
+    }
+  }
+  
+  return {
+    valid: errors.filter(e => e.type !== 'warning').length === 0,
+    errors
+  };
+};

@@ -8,14 +8,16 @@ Reproductor de video avanzado tipo YouTube con las siguientes características:
 
 - **🎬 Interfaz tipo YouTube**: Layout profesional con panel de secciones lateral
 - **📑 Panel de Secciones Interactivo**: Navegación rápida a través de capítulos/secciones del video
-- **🎯 Barra de Progreso Inteligente**: Marcadores visuales que muestran las secciones sin superponerse
+- **🎯 Barra de Progreso Inteligente**: Marcadores visuales que muestran las secciones **sin superponerse** (estilo YouTube)
+- **🔄 Secciones Secuenciales**: Cada sección ocupa su propio espacio en la línea de tiempo, sin overlaps
 - **✂️ Sistema de Cortes**: Salta automáticamente las secciones no deseadas (cuts)
-- **🏷️ Etiquetas/Tags**: Visualiza y navega por diferentes secciones temáticas
+- **🏷️ Etiquetas/Tags**: Visualiza y navega por diferentes secciones temáticas que cubren todo el video
 - **⌨️ Atajos de Teclado**: Control completo mediante teclado
   - `Espacio`: Reproducir/Pausar
   - `Flecha Derecha`: Siguiente punto de interés
   - `Flecha Izquierda`: Punto de interés anterior
 - **⏱️ Tiempo Virtual**: Sistema de tiempo que excluye los cortes para una experiencia fluida
+- **✅ Validación de Secciones**: Sistema automático que detecta superposiciones en los tags
 
 ### 🏗️ Arquitectura
 
