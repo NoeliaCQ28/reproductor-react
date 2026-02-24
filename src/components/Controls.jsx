@@ -27,6 +27,7 @@ export const Controls = () => {
   }, [state.realTime, state.tags, state.cuts, dispatch]);
 
   // Saltar a la sección anterior (tag)
+
   const goToPreviousSection = useCallback(() => {
     if (!state.tags || state.tags.length === 0) return;
     
@@ -34,21 +35,34 @@ export const Controls = () => {
     const sortedTags = [...state.tags].sort((a, b) => a.start - b.start);
     
     // Encontrar la sección actual
-    const currentTagIndex = sortedTags.findIndex(tag => 
+    const currentTag = sortedTags.find(tag => 
       state.realTime >= tag.start && state.realTime < tag.end
     );
     
     let targetTag;
     
-    if (currentTagIndex > 0) {
-      // Si estamos en una sección, ir a la anterior
-      targetTag = sortedTags[currentTagIndex - 1];
-    } else if (currentTagIndex === -1) {
-      // Si no estamos en ninguna sección, ir a la última que haya pasado
+    if (currentTag) {
+      // Estamos en una sección
+      const secondsIntoCurrentSection = state.realTime - currentTag.start;
+      
+      if (secondsIntoCurrentSection > 3) {
+        targetTag = currentTag;
+      } else {
+        const currentIndex = sortedTags.indexOf(currentTag);
+        if (currentIndex > 0) {
+          targetTag = sortedTags[currentIndex - 1];
+        } else {
+
+          targetTag = currentTag;
+        }
+      }
+    } else {
+      // No estamos en ninguna sección, ir a la última que haya pasado
       const previousTags = sortedTags.filter(tag => tag.end <= state.realTime);
-      targetTag = previousTags[previousTags.length - 1];
+      if (previousTags.length > 0) {
+        targetTag = previousTags[previousTags.length - 1];
+      }
     }
-    // Si currentTagIndex === 0, estamos en la primera sección, no hacemos nada
     
     if (targetTag) {
       const virtualStart = realToVirtualTime(targetTag.start, state.cuts);

@@ -29,9 +29,13 @@ Reproductor de video avanzado tipo YouTube con las siguientes características:
 
 #### Navegación por Secciones
 - **Shift + Flecha Derecha**: Siguiente sección
-- **Shift + Flecha Izquierda**: Sección anterior
+- **Shift + Flecha Izquierda**: Sección anterior (comportamiento inteligente*)
 - **M** o **.**: Siguiente sección
-- **N** o **,**: Sección anterior
+- **N** o **,**: Sección anterior (comportamiento inteligente*)
+
+*Comportamiento inteligente de sección anterior:
+  - Si llevas más de 3 segundos en la sección actual → vuelve al inicio de la sección actual
+  - Si estás en los primeros 3 segundos → va a la sección anterior
 
 ### 🎮 Controles Visuales
 
